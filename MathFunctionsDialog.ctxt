@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.target=MathFunctionsDialog
+comment1.params=
+comment1.target=short\ getAuswahl()
+comment1.text=\n\ diese\ ist\ einlesen\ Methode.\n\ die\ Metode\ l\u00E4sst\ der\ Benutzer\ w\u00E4hlen\ ,\ zwichen\ TeilerSumme\ (1)\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ oder\ ISBN\ pr\u00FCfziffer\ (2)\ \ \n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ oder\ ENDE\ (0)\n
+comment2.params=teilerAndPruefziffer
+comment2.target=long\ getNummber(short)
+comment2.text=\n\ diese\ ist\ einlesen\ Methode.\n\ die\ Metode\ list\ und\ scannt\ TeilerSumme\ und\ pruefZiffer\ ein.\n
+comment3.params=
+comment3.target=void\ TeilerSumme_funktion()
+comment3.text=\n\ diese\ Funktion\ \u00FCberprueft\ ob\ die\ TeilSumme\ zahl\ enth\u00E4lt.\ \ \ \n
+comment4.params=
+comment4.target=void\ pruefZiffer_funktion()
+comment4.text=\n\ diese\ Funktion\ \u00FCberprueft\ ob\ die\ pruefZiffer\ zahl\ enth\u00E4lt.\n\ und\ ob\ pruefZiffer\ 9\ stellig\ Zahl\ ist.\n
+comment5.params=
+comment5.target=void\ start()
+comment5.text=\n\ diese\ Funktion\ ruft\ die\ andern\ Methoden\ .\n\ diese\ Funktion\ \u00FCberprueft\ ob\ der\ Bentzer\ zahl\ eingibt.\n
+comment6.params=args
+comment6.target=void\ main(java.lang.String[])
+numComments=7

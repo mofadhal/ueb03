@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MathFunctions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ueb03Maven</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">MathFunctions.java</span></div><h1>MathFunctions.java</h1><pre class="source lang-java linenums">/**
+ * Diese Klasse implementiert einige mathematische Funktionen:
+ * 
+ * @author Christopher
+ *
+ */
+public class MathFunctions {
+    // ********************************************** Konstanten ***********************************************
+	private static final String KEINE_NATUERLICHE_ZAHL = &quot;Keine natuerliche Zahl!&quot;;
+    
+    private static final String ISBN_FEHLERHAFT = &quot;Die ISBN ist nicht korrekt&quot;;
+    
+    private static final long ISBN_MIN = 100000000L;
+    private static final long ISBN_MAX = 999999999L;
+    /**
+     * Privater Konstruktor, damit keine Objekte erzeugt werden koennen.
+     */
+    private MathFunctions() { }
+    
+    /**
+     * Berechnet die Teilersumme einer Zahl. Die Teilersumme kann nur von einer natuerlichen Zahl berechnet werden. Die Berechnung laeuft bis
+     * zur Wurzel der Zahl. Wenn ein Teiler gefunden wird, der kleiner als die Wurzel ist, wird auch gleichzeitig ein Teiler gefunden, der 
+     * groesser ist als die Wurzel. Nur wenn der Teiler genau die Wurzel ist, wird der Teiler einmal hinzuaddiert.
+     * Beispiel: Ein Teiler von 36 ist 3: 3 * 12 = 36. Somit ist auch 12 ein Teiler von 36.
+     * Die Wurzel von 36 ist 6: 6 * 6 = 36 
+     * Somit darf die 6 nur einmal zur Teilersumme addiert werden.
+     * 
+     * Die Schleife berechnet bei jedem Teiler den entsprechenden Teiler ueber der Wurzel und addiert diesen zur Teilersummer hinzu.
+     * Beispiel fuer die Berechnung: Die Teilersumme von 36 ist = 91.
+     * Die Berechnung der Teilersumme von 36 wuerde dann folgendermassen ablaufen:
+     * Initialisierung: Teilersumme = 36 (eingelesene Zahl) + 1 (immer Teiler).
+     * 1. Durchlauf (i = 2): teilersumme = teilersumme + 2 + 18
+     * 2. Durchlauf (i = 3): teilersumme = teilersumme + 3 + 12
+     * 3. Durchlauf (i = 4): teilersumme = teilersumme + 4 + 9
+     * 4. Durchlauf (i = 5): 5 ist kein Teiler.
+     * 5. Durchlauf (i = 6): teilersumme = teilersumme + 6
+     * 
+     * @param zahl Die Zahl, deren Teilersumme berechnet werden soll. 
+     * @return Die Teilersumme.
+     */
+    public static long berechneTeilersumme(long zahl) {
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (zahl &lt;= 0) {</span>
+<span class="fc" id="L43">            throw new RuntimeException(KEINE_NATUERLICHE_ZAHL);</span>
+        }
+        
+<span class="fc" id="L46">        long teilersumme = 1;</span>
+        
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (zahl &gt; 1) {</span>
+<span class="fc" id="L49">            teilersumme = teilersumme + zahl;    </span>
+            
+<span class="fc bfc" id="L51" title="All 2 branches covered.">            if (istPrimzahl(zahl) == false) {</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">                for(int i = 2; i &lt;= Math.sqrt(zahl); i++) {</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">                    if(zahl % i == 0) {</span>
+<span class="fc" id="L54">                        teilersumme = teilersumme + i;</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">                        if (i &lt; Math.sqrt(zahl)) {</span>
+<span class="fc" id="L56">                            teilersumme = teilersumme;    </span>
+                        }
+                    }
+                }
+            }
+        }
+
+<span class="fc" id="L63">        return teilersumme;</span>
+    }
+    
+    public static String berechneChecksummeIsbn(long isbn) { 	
+<span class="fc bfc" id="L67" title="All 4 branches covered.">        if((isbn &lt; ISBN_MIN) || (isbn &gt; ISBN_MAX)) {</span>
+<span class="fc" id="L68">           throw new IllegalArgumentException(ISBN_FEHLERHAFT);</span>
+        }
+    
+<span class="fc" id="L71">        long summe = 0L;</span>
+<span class="fc" id="L72">        int i = 9;</span>
+    
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        while(isbn &gt; 0) {</span>
+<span class="fc" id="L75">           summe += (isbn % 10) * i;</span>
+<span class="fc" id="L76">           isbn /= 10;</span>
+<span class="fc" id="L77">           i--;</span>
+        }
+    
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        if (summe % 11 == 10) {</span>
+<span class="fc" id="L81">           return &quot;X&quot;;</span>
+        }
+        else {
+<span class="fc" id="L84">           return &quot;&quot; + summe % 11;</span>
+        }
+    }
+    
+    /**
+     * Prueft, ob eine Zahl eine Primzahl ist. Der Algorithmus funktioniert folgendermassen:
+     * Die Berechnung laeuft bis zur Wurzel der Zahl in 2er-Schritten, da nur ungeraden Zahlen geprueft werden muessen. Ob es sich um ungerade
+     * Zahlen handelt, wird bereits vor der Schleife durch modulo 2 geprueft. Die Schleife muss aus folgendem Grund nur bis zur Wurzel laufen:
+     * Wenn die Teiler vor der Wurzel schon geprueft werden, kann es nach der Wurzel keine Teiler mehr geben, weil ein Teiler vor der Wurzel mal ein
+     * Teiler nach der Wurzel die Zahl ergibt -&gt; teilerVorWurzel * teilerNachWurzel = zahl
+     * Beispiel: 3 * 7 = 21
+     * 
+     * @param zahl Die zu pruefende Zahl.
+     * @return True, wenn es sich um eine Primzahl handelt, sonst false.
+     */
+    public static boolean istPrimzahl(long zahl) {
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        if (zahl &lt;= 0) {</span>
+<span class="nc" id="L101">            throw new RuntimeException(KEINE_NATUERLICHE_ZAHL);</span>
+        }
+        
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        if(zahl == 1) {</span>
+<span class="nc" id="L105">            return false;</span>
+        }
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        else if(zahl == 2) {</span>
+<span class="fc" id="L108">            return true;</span>
+        }        
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        else if(zahl % 2 == 0) {</span>
+<span class="fc" id="L111">            return false;</span>
+        }
+        else {
+<span class="fc bfc" id="L114" title="All 2 branches covered.">            for(int i = 3; i &lt;= Math.round(Math.sqrt(zahl)); i = i + 2) {</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">                if(zahl % i == 0) {</span>
+<span class="fc" id="L116">                    return false;</span>
+                }
+            }
+        }
+        
+<span class="fc" id="L121">        return true;  </span>
+    }
+    
+    /**
+     * Berechnet die Nullstellen einer quadratischen Gleichung. Zuerst wird die Diskriminante berechnet. Dann werden die folgenden drei Faelle 
+     * unterschieden:
+     * &lt;ol&gt;
+     *  &lt;li&gt;Diskriminante &gt; 0 -&gt; Zwei reele Nullstellen.&lt;/li&gt;
+     *  &lt;li&gt;Diskriminante = 0 -&gt; eine doppelte Nullstelle.&lt;/li&gt;
+     *  &lt;li&gt;Diskriminante &lt; 0 -&gt; Zwei komplexe Nullstellen.&lt;/li&gt;
+     * &lt;/ol&gt;
+     * 
+     * Da bei der Gleitpunktarithmetik eine Zahl nicht genau 0.0 wird, muss mit einer entsprechenden Abweichung gerechnet werden.
+     * 
+     * @param p Der Parameter B bewirkt eine Verschiebung in x- und y-Richtung und zusaetzlich die Steigung, mit der die y-Achse geschnitten wird.
+     * @param q Der Parameter C gibt die Verschiebung in y-Richtung an. (oben: c &gt; 0, unten: c &lt; 0)
+     * @return Ein String, der angibt, welche Nullstellen gefunden wurden.
+     */
+    public static String berechneNullstellen(double p, double q) {
+<span class="fc" id="L140">		final double EPSILON = 1.0e-9;</span>
+		double x1;
+		double x2;
+		String returnString;
+<span class="fc" id="L144">		double diskriminante = ((p/2) * (p/2)) - q;  //p*p/4.0 - q;</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		if (diskriminante &gt; EPSILON) { // zwei Nullstellen</span>
+<span class="fc" id="L146">			x1 = -p/2.0 + Math.sqrt(diskriminante);</span>
+<span class="fc" id="L147">			x2 = -p/2.0 - Math.sqrt(diskriminante);</span>
+<span class="fc" id="L148">			returnString = &quot;Zwei Nullstellen: &quot; + x1 + &quot; | &quot; + x2;</span>
+<span class="pc bpc" id="L149" title="1 of 4 branches missed.">		} else if (diskriminante &gt;= -EPSILON &amp;&amp; diskriminante &lt;= EPSILON) { // doppelte Nullstelle</span>
+<span class="fc" id="L150">			x1 = -p/2.0;</span>
+<span class="fc" id="L151">			returnString = &quot;Doppelte Nullstelle: &quot; + x1;</span>
+		} else {	// komplexe Nullstellen
+<span class="fc" id="L153">			returnString = &quot;Komplexe Nullstellen&quot;;</span>
+		}
+<span class="fc" id="L155">		return returnString;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

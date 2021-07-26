@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Artikel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ueb01Maven</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Artikel.java</span></div><h1>Artikel.java</h1><pre class="source lang-java linenums">/**
+ * Eine einfache Artikelklasse. Sie wurde wegen der fuenften Aufgabe um das Attribut preis und die entsprechenden Methoden erweitert.
+ * Auch bei den Konstruktoren und bei der toString()-Methode wird das neue Attribut beruecksichtigt. Eine equals()-Methode wurde
+ * eingefuegt, um Vergleiche von Artikeln zuzulassen.
+ * @author Christopher
+ *
+ */
+<span class="pc bpc" id="L8" title="1 of 2 branches missed.">public class Artikel {</span>
+	private static final String FALSCHE_ARTIKELNUMMER = &quot;Die Artikelnummer muss zwischen 999 und 10000 liegen!&quot;;
+	private static final String LEERE_BEZEICHNUNG = &quot;Die Bezeichnung darf nicht leer bleiben!&quot;;
+	private static final String NIEDRIGER_BESTAND = &quot;Der Bestand muss &gt;= 0 sein!&quot;;
+	private static final String MENGE_KLEINER_NULL = &quot;Die Menge muss &gt; 0 sein!&quot;;
+	private static final String BESTAND_KLEINER_NULL = &quot;Der neue Bestand muss &gt; 0 sein!&quot;;
+	/**
+	 * Der Anfangsbestand, mit dem neue Artikel initialisiert werden.
+	 */
+	private static final int ANFANGS_BESTAND = 0;
+	/**
+	 * Die Artikelnummer muss zwischen 999 und 10000 liegen.
+	 */
+    private int artikelNr;
+    /**
+     * Die Bezeichnung des Artikels muss eingegeben werden.
+     */
+    private String bezeichnung;
+    /**
+     * Der Lagerbestand des Artikels.
+     */
+    private int bestand;
+
+    /**
+     * Konstruktor, der einen Artikel initialisiert. Die Uebergabeparameter werden geprueft. 
+     * @param artikelNr Die Artikelnummer muss vierstellig sein.
+     * @param bezeichnung Die Artikelbezeichnung muss einen Text enthalten.
+     * @param bestand Der Bestand des Artikels muss positiv oder 0 sein.
+     * @param preis Der Preis des Artikels muss groesser als 0 sein. 
+     */
+<span class="fc" id="L38">    public Artikel(int artikelNr, String bezeichnung, int bestand) {</span>
+<span class="pc bpc" id="L39" title="1 of 6 branches missed.">        assert (artikelNr &gt; 999 &amp;&amp; artikelNr &lt; 10000): FALSCHE_ARTIKELNUMMER;</span>
+<span class="pc bpc" id="L40" title="1 of 4 branches missed.">        assert (bezeichnung != null &amp;&amp; </span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        		!bezeichnung.trim().isEmpty()): LEERE_BEZEICHNUNG;</span>
+<span class="pc bpc" id="L42" title="2 of 4 branches missed.">        assert (bestand &gt;= ANFANGS_BESTAND): NIEDRIGER_BESTAND; </span>
+        
+<span class="fc" id="L44">        this.artikelNr = artikelNr;</span>
+<span class="fc" id="L45">        this.bezeichnung = bezeichnung.trim();</span>
+<span class="fc" id="L46">        this.bestand = bestand;</span>
+<span class="fc" id="L47">    }</span>
+    
+    /**
+     * Konstruktor, der einen Artikel mit einem Anfangsbestand initialisiert.
+     * @param artikelNr Die Artikelnummer.
+     * @param bezeichnung Die Artikelbezeichnung.
+     * @param preis Der Preis des Artikels.
+     */
+    public Artikel(int artikelNr, String bezeichnung) {
+<span class="fc" id="L56">    	this(artikelNr, bezeichnung, ANFANGS_BESTAND);</span>
+<span class="fc" id="L57">    }</span>
+    /**
+     * Bucht einen Zugang zum Artikelbestand. Dabei muss die zugebuchte Menge groesser als 0 sein.
+     * @param menge Die Menge, die dazu gebucht wird.
+     */
+    public void bucheZugang(int menge) {
+<span class="pc bpc" id="L63" title="1 of 4 branches missed.">        assert (menge &gt; 0): MENGE_KLEINER_NULL;</span>
+<span class="fc" id="L64">        this.bestand = bestand + menge;</span>
+<span class="fc" id="L65">    }</span>
+    
+    /**
+     * Bucht einen Abgang vom Artikelbestand. Die abgebuchte Menge muss groesser als 0 sein. Ausserdem darf der 
+     * Bestand durch die Abbuchung nicht unter 0 fallen.
+     * @param menge Die abzubuchende Menge.
+     */
+    public void bucheAbgang(int menge) {
+<span class="pc bpc" id="L73" title="1 of 4 branches missed.">        assert (menge &gt; 0): MENGE_KLEINER_NULL;</span>
+<span class="pc bpc" id="L74" title="1 of 4 branches missed.">        assert (this.bestand &gt; menge): BESTAND_KLEINER_NULL;</span>
+<span class="fc" id="L75">        this.bestand = this.bestand - menge;</span>
+<span class="fc" id="L76">    }</span>
+    
+    /**
+     * Wandelt den Artikel in einen String um.
+     * @return Die String-Repraesentation des Artikels.
+     */
+    public String toString() {
+<span class="fc" id="L83">    	return &quot;Artikel: &quot; + artikelNr + &quot; Bezeichnung: &quot; + bezeichnung + &quot; Bestand: &quot; + bestand;</span>
+    }
+    
+	@Override
+	public int hashCode() {
+<span class="nc" id="L88">		final int prime = 31;</span>
+<span class="nc" id="L89">		int result = 1;</span>
+<span class="nc" id="L90">		result = prime * result + artikelNr;</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		result = prime * result + ((bezeichnung == null) ? 0 : bezeichnung.hashCode());</span>
+<span class="nc" id="L92">		return result;</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (this == obj)</span>
+<span class="nc" id="L98">			return true;</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (obj == null)</span>
+<span class="nc" id="L100">			return false;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (getClass() != obj.getClass())</span>
+<span class="nc" id="L102">			return false;</span>
+<span class="nc" id="L103">		Artikel other = (Artikel) obj;</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (artikelNr != other.artikelNr)</span>
+<span class="nc" id="L105">			return false;</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (bezeichnung == null) {</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">			if (other.bezeichnung != null)</span>
+<span class="nc" id="L108">				return false;</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		} else if (!bezeichnung.equals(other.bezeichnung))</span>
+<span class="nc" id="L110">			return false;</span>
+<span class="nc" id="L111">		return true;</span>
+	}
+
+	public String getBezeichnung() {
+<span class="fc" id="L115">		return bezeichnung;</span>
+	}
+
+	public void setBezeichnung(String bezeichnung) {
+<span class="pc bpc" id="L119" title="1 of 6 branches missed.">        assert (bezeichnung != null &amp;&amp; !bezeichnung.trim().isEmpty()): LEERE_BEZEICHNUNG;</span>
+<span class="fc" id="L120">		this.bezeichnung = bezeichnung.trim();</span>
+<span class="fc" id="L121">	}</span>
+
+	public int getArtikelNr() {
+<span class="fc" id="L124">		return artikelNr;</span>
+	}
+
+	public int getBestand() {
+<span class="fc" id="L128">		return bestand;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
